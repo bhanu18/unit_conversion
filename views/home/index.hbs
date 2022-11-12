@@ -1,0 +1,201 @@
+<div class="container bg-light p-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            <h5>Convert imperial to metric</h5>
+            <label for="">Select Context</label>
+            <select class="form-select mb-3" id="context-select">
+                {{#each context}}
+                <option value="{{_id}}">{{context_name}}</option>
+                {{/each}}
+            </select>
+            <div class="row">
+                <div class="col-6">
+                    <input type="number" id="val1" class="form-control mb-2">
+                    <select id="" class="form-select">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="number" id="val2" class="form-control mb-2">
+                    <select id="" class="form-select">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-light p-5">
+    <h4>Units of measurement</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addunits"> Add </button>
+
+    {{>errors errors=errors}}
+    <div class="responsive">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <th>Unit name</th>
+                <th>System</th>
+                <th>Context</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {{#each unit}}
+                <tr>
+                    <td>{{unit_name}}</td>
+                    <td>{{system.system_name}}</td>
+                    <td>{{context.context_name}}</td>
+                    <td><a href="/unit/edit/{{_id}}"><i class="bi bi-pencil-square"></i></a>
+                        <a href="/unit/delete/{{_id}}"><i class="bi bi-trash3"></i></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container bg-light p-5">
+    <h4>Measurment System</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addunits"> Add </button>
+    {{>errors errors=errors}}
+
+    <div class="responsive">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <th>System</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {{#each system}}
+                <tr>
+                    <td>{{system_name}}</td>
+                    <td><a href="/system/edit/{{_id}}"><i class="bi bi-pencil-square"></i></a>
+                        <a href="/system/delete/{{_id}}"><i class="bi bi-trash3"></i></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addunits" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Unit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/unit/add" method="post" class="needs-validation">
+                    <div class="mb-3">
+                        <label for="Product" class="form-label">Unit</label>
+                        <input type="text" class="form-control" name="unit_name" id="name" required>
+                        <div class="invalid-feedback">
+                            Please enter an product uid
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Product" class="form-label">Unit system</label>
+                        <select name="system" class="form-select" id="">
+                            {{#each system}}
+                            <option value="{{_id}}">{{system_name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="mb-3 text-right">
+                        <label for="Product" class="form-label">Unit Context</label>
+                        <div class="mb-3">
+                            <select name="context" class="form-select" id="">
+                                {{#each context}}
+                                <option value="{{_id}}">{{context_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="mb-3 text-right">
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addsystem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Unit System</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/system/add" method="post" class="needs-validation">
+                    <div class="mb-3">
+                        <label for="Product" class="form-label">Unit</label>
+                        <input type="text" class="form-control" name="system_name" id="name" required>
+                        <div class="invalid-feedback">
+                            Please enter a unit system name
+                        </div>
+                    </div>
+                    <div class="mb-3 text-right">
+                        <div class="mb-3 text-right">
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addcontext" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Unit System Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/unit/addcontext" method="post" class="needs-validation">
+                    <div class="mb-3">
+                        <label for="Product" class="form-label">Unit System Type</label>
+                        <input type="text" class="form-control" name="context_name" id="name" required>
+                        <div class="invalid-feedback">
+                            Please enter a context name
+                        </div>
+                    </div>
+                    <div class="mb-3 text-right">
+                        <div class="mb-3 text-right">
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

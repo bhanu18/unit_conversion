@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="bg-light p-5">
+        <form action="/unit/{{unit._id}}" method="post" class="needs-validation">
+        <input type="hidden" name="_method" value="PUT" id="">
+            <div class="mb-3">
+                <label for="Product" class="form-label">Unit</label>
+                <input type="text" class="form-control" name="unit_name" id="name" value="{{unit.unit_name}}" required>
+                <div class="invalid-feedback">
+                    Please enter a unit name
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="Product" class="form-label">Unit system</label>
+                <select name="system" class="form-select" id="" data-seleted="{{system._id}}">
+                    {{#each system}}
+                    <option value="{{_id}}">{{system_name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="mb-3 text-right">
+                <label for="Product" class="form-label">Unit Context</label>
+                <div class="mb-3">
+                    <select name="context" data-seleted="{{context._id}}" class="form-select" id="">
+                        {{#each context}}
+                        <option value="{{_id}}">{{context_name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="mb-3 text-right">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end">
+                            <a href="/" class="btn btn-secondary">Close</a>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
