@@ -5,19 +5,20 @@ import * as dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
 import session from "express-session";
 import MongoStore from 'connect-mongo';
-import passportConfig from './config/passport.js';
+// import passportConfig from './config/passport.js';
 import passport from 'passport';
 import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
 
-import { select } from './helper/helper.js';
+import { select, match } from './helper/helper.js';
 import index from './routes/index.js'
 import unit from './routes/units.js';
 import system from './routes/system.js';
+import pairs from './routes/pairs.js';
 
-(passportConfig)(passport);
+// (passportConfig)(passport);
 
 dotenv.config();
 
@@ -58,7 +59,8 @@ app.use(logger('dev'));
 // handlebars
 app.engine('.hbs', exphbs.engine({
     helpers: {
-        select
+        select,
+        match
     },
     defaultLayout: 'main',
     extname: '.hbs'
@@ -84,6 +86,8 @@ app.use('/', index)
 app.use('/unit', unit);
 
 app.use('/system', system);
+
+app.use('/pairs', pairs)
 
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = process.env.MONGO_DB_CONNECTION_STRING;

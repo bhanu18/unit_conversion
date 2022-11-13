@@ -16,8 +16,8 @@ export const addUnit = async (req, res) => {
 
 export const getUnit = async (req, res) => {
     try {
-        const context = await Context.find().lean();
-        const system = await System.find().lean();
+        const contexts = await Context.find().lean();
+        const systems = await System.find().lean();
         const unit = await Units.findOne({
             _id: req.params.id
         }).populate({
@@ -27,9 +27,11 @@ export const getUnit = async (req, res) => {
                 path: 'context'
             }).lean();
 
+            // console.log(unit);
+
         res.render('unit/edit', {
-            context,
-            system,
+            contexts,
+            systems,
             unit
         })
     } catch (error) {
@@ -68,6 +70,17 @@ export const addContext = async (req, res) => {
         await Context.create(req.body);
         req.flash('success_msg', 'Added succesfully');
         res.redirect('/')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const queryGet = async (req, res) => {
+    try {
+        
+        const data = await Units.find({ context: req.query.context}).lean();
+
+        res.send(data);
     } catch (error) {
         console.log(error);
     }

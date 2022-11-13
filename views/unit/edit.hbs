@@ -11,8 +11,8 @@
             </div>
             <div class="mb-3">
                 <label for="Product" class="form-label">Unit system</label>
-                <select name="system" class="form-select" id="" data-seleted="{{system._id}}">
-                    {{#each system}}
+                <select name="system" class="form-select select_system" id="" data-seleted="{{unit.system._id}}">
+                    {{#each systems}}
                     <option value="{{_id}}">{{system_name}}</option>
                     {{/each}}
                 </select>
@@ -20,8 +20,8 @@
             <div class="mb-3 text-right">
                 <label for="Product" class="form-label">Unit Context</label>
                 <div class="mb-3">
-                    <select name="context" data-seleted="{{context._id}}" class="form-select" id="">
-                        {{#each context}}
+                    <select name="context" class="form-select select_context" data-seleted="{{unit.context._id}}" id="">
+                        {{#each contexts}}
                         <option value="{{_id}}">{{context_name}}</option>
                         {{/each}}
                     </select>

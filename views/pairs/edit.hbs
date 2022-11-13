@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="bg-light p-5">
+        <form action="/pairs/{{pairs._id}}" method="post" class="needs-validation">
+            <input type="hidden" name="_method" value="PUT" id="">
+            <div class="mb-3">
+                <label for="Product" class="form-label">Pairs Name</label>
+                <input type="text" class="form-control" name="pairs_name" id="name" value="{{pairs.pairs_name}}" required>
+                <div class="invalid-feedback">
+                    Please enter a name
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <input type="number" name="val1" id="val1" class="form-control mb-2" step="any"
+                        placeholder="Value 1" value="{{pairs.val1}}" required>
+                    <select id="" name='pair1' class="form-select select_unit1" data-seleted="{{pairs.pair1}}" required>
+                        {{#each unit}}
+                        <option value="{{_id}}">{{unit_name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="number" name="val2" id="val2" class="form-control mb-2" step="any"
+                        placeholder="Value 2" value="{{pairs.val2}}" required>
+                    <select id="" name='pair2' class="form-select select_unit2" data-seleted="{{pairs.pair2}}" required>
+                        {{#each unit}}
+                        <option value="{{_id}}">{{unit_name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <select name="type" id="type" class="form-select" aria-label="Select a type" data-seleted="{{pairs.type}}" required>
+                    <option value="1">Multiply</option>
+                    <option value="2">Divide</option>
+                </select>
+            </div>
+            <div class="mb-3 text-right">
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end">
+                        <a href="/" class="btn btn-secondary">Close</a>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

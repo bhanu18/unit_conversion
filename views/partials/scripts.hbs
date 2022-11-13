@@ -1,0 +1,112 @@
+<script>
+    $(document).ready(function () {
+
+        let valueToMultiply = 0;
+        let divOrMul;
+        $('select#context_select').on('change', function () {
+            let data = $('#context_select').val();
+            var newOption;
+
+            var unit_select1 = document.getElementById('unit_select1');
+            var unit_select2 = document.getElementById('unit_select2');
+            $.ajax({
+                url: '/unit/get',
+                type: "GET",
+                data: "context=" + data,
+                success: function (res) {
+
+                    for (let i = 0; i < res.length; i++) {
+
+                        newOption = document.createElement('option');
+                        newOption.value = res[i]._id;
+                        newOption.text = res[i].unit_name;
+                        unit_select1.appendChild(newOption);
+                        // console.log(res[i].unit_name);
+                    }
+                    for (let i = 0; i < res.length; i++) {
+
+                        newOption = document.createElement('option');
+                        newOption.value = res[i]._id;
+                        newOption.text = res[i].unit_name;
+                        unit_select2.appendChild(newOption);
+                        //  console.log(res[i].unit_name);
+                    }
+                }
+            })
+        })
+
+
+        $('#unit_select2').on('change', function () {
+            var unit_select1 = $('#unit_select1').val();
+            var unit_select2 = $('#unit_select2').val();
+            $.ajax({
+                url: '/pairs/get',
+                type: "GET",
+                data: 'pair1=' + unit_select1 + "&pair2=" + unit_select2,
+                success: function (res) {
+
+                    if (res.length > 0) {
+
+                        for (let i = 0; i < res.length; i++) {
+                            console.log(res[i].val2);
+                            valueToMultiply = res[i].val2;
+                            divOrMul = res[i].type;
+                            $('#pair_value').html('<p>' + res[i].pairs_name + '</p>');
+                        }
+                    } else {
+                        $('#pair_value').html('<p>No pairs found</p>');
+                    }
+
+                }
+            })
+        });
+
+        $('#val1').on('keyup', function () {
+
+            console.log(divOrMul);
+
+            if (divOrMul === '1') {
+                let num = $('#val1').val() * valueToMultiply;
+                if (!isNaN(num)) {
+                    $('#val2').val(num);
+                }
+            }
+
+            if (divOrMul === '2') {
+                let num = valueToMultiply / $('#val1').val();
+                if (!isNaN(num)) {
+                    $('#val2').val(num);
+                }
+            }
+        })
+
+        $("select.select_unit1").val('{{pairs.pair1}}').change();
+        $("select.select_unit2").val('{{pairs.pair2}}').change();
+        
+        $("select.select_system").val('{{unit.system._id}}').change();
+        $("select.select_context").val('{{unit.context._id}}').change();
+
+    })
+
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+</script>

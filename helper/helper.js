@@ -10,3 +10,12 @@ export const select = (selected, options) => {
             ' selected="selected"$&'
         )
 }
+
+export const match = (number) => {
+    if(number === '1'){
+        return 'Multiply';
+    }
+    if(number === '2'){
+        return "Divide";
+    }
+}

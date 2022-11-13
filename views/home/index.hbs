@@ -1,36 +1,37 @@
 <div class="container bg-light p-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-6">
-            <h5>Convert imperial to metric</h5>
-            <label for="">Select Context</label>
-            <select class="form-select mb-3" id="context-select">
+            <h5>Convert values</h5>
+            <select class="form-select mb-3" id="context_select">
+                <option value="">Select a context</option>
                 {{#each context}}
                 <option value="{{_id}}">{{context_name}}</option>
                 {{/each}}
             </select>
             <div class="row">
                 <div class="col-6">
-                    <input type="number" id="val1" class="form-control mb-2">
-                    <select id="" class="form-select">
-                        <option value="">Select</option>
+                    <input type="number" id="val1" class="form-control mb-2" placeholder="enter a value">
+                    <select id="unit_select1" class="form-select" >
+                        <option value="">Select a unit</option>
                     </select>
                 </div>
                 <div class="col-6">
-                    <input type="number" id="val2" class="form-control mb-2">
-                    <select id="" class="form-select">
-                        <option value="">Select</option>
+                    <input type="number" id="val2" class="form-control mb-2" placeholder="enter a value">
+                    <select id="unit_select2" class="form-select">
+                        <option value="">Select a unit</option>
                     </select>
                 </div>
+                <div id="pair_value"></div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="container bg-light p-5">
+    {{>errors errors=errors}}
     <h4>Units of measurement</h4>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addunits"> Add </button>
 
-    {{>errors errors=errors}}
     <div class="responsive">
         <table class="table table-hover table-responsive">
             <thead>
@@ -46,7 +47,8 @@
                     <td>{{system.system_name}}</td>
                     <td>{{context.context_name}}</td>
                     <td><a href="/unit/edit/{{_id}}"><i class="bi bi-pencil-square"></i></a>
-                        <a href="/unit/delete/{{_id}}"><i class="bi bi-trash3"></i></a></td>
+                        <a href="/unit/delete/{{_id}}"><i class="bi bi-trash3"></i></a>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -56,9 +58,7 @@
 
 <div class="container bg-light p-5">
     <h4>Measurment System</h4>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addunits"> Add </button>
-    {{>errors errors=errors}}
-
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addsystem"> Add </button>
     <div class="responsive">
         <table class="table table-hover table-responsive">
             <thead>
@@ -70,7 +70,37 @@
                 <tr>
                     <td>{{system_name}}</td>
                     <td><a href="/system/edit/{{_id}}"><i class="bi bi-pencil-square"></i></a>
-                        <a href="/system/delete/{{_id}}"><i class="bi bi-trash3"></i></a></td>
+                        <a href="/system/delete/{{_id}}"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container bg-light p-5">
+    <h4>Units conversion pairs</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addpairs"> Add </button>
+    <div class="responsive">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <th>Pairs</th>
+                <th>value 1</th>
+                <th>value 2</th>
+                <th>type</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {{#each pairs}}
+                <tr>
+                    <td>{{pairs_name}}</td>
+                    <td>{{val1}}</td>
+                    <td>{{val2}}</td>
+                    <td>{{match type}}</td>
+                    <td><a href="/pairs/edit/{{_id}}"><i class="bi bi-pencil-square"></i></a>
+                        <a href="/pairs/delete/{{_id}}"><i class="bi bi-trash3"></i></a>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -112,29 +142,28 @@
                                 {{/each}}
                             </select>
                         </div>
-                        <div class="mb-3 text-right">
-                            <div class="row">
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
+                    </div>
+                    <div class="mb-3 text-right">
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="addsystem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Unit System</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add measurement Unit System</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -147,23 +176,22 @@
                         </div>
                     </div>
                     <div class="mb-3 text-right">
-                        <div class="mb-3 text-right">
-                            <div class="row">
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-</div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="addcontext" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -182,20 +210,76 @@
                         </div>
                     </div>
                     <div class="mb-3 text-right">
-                        <div class="mb-3 text-right">
-                            <div class="row">
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="addpairs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add pairs</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/pairs/add" method="post" class="needs-validation">
+                    <div class="mb-3">
+                        <label for="Product" class="form-label">Pairs Name</label>
+                        <input type="text" class="form-control" name="pairs_name" id="name" required>
+                        <div class="invalid-feedback">
+                            Please enter a name
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <input type="number" name="val1" id="val1" class="form-control mb-2" step="any"
+                                placeholder="Value 1" required>
+                            <select id="" name='pair1' class="form-select" required>
+                                {{#each unit}}
+                                <option value="{{_id}}">{{unit_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <input type="number" name="val2" id="val2" class="form-control mb-2" step="any"
+                                placeholder="Value 2" required>
+                            <select id="" name='pair2' class="form-select" required>
+                                {{#each unit}}
+                                <option value="{{_id}}">{{unit_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <select name="type" id="type" class="form-select" aria-label="Select a type" required>
+                            <option value="1">Multiply</option>
+                            <option value="2">Divide</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 text-right">
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
