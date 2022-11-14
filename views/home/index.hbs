@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-6">
                     <input type="number" id="val1" class="form-control mb-2" placeholder="enter a value">
-                    <select id="unit_select1" class="form-select" >
+                    <select id="unit_select1" class="form-select">
                         <option value="">Select a unit</option>
                     </select>
                 </div>
                 <div class="col-6">
-                    <input type="number" id="val2" class="form-control mb-2" placeholder="enter a value">
+                    <input type="number" id="val2" class="form-control mb-2" readonly>
                     <select id="unit_select2" class="form-select">
                         <option value="">Select a unit</option>
                     </select>
@@ -117,17 +117,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/unit/add" method="post" class="needs-validation">
+                <form action="/unit/add" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="Product" class="form-label">Unit</label>
                         <input type="text" class="form-control" name="unit_name" id="name" required>
                         <div class="invalid-feedback">
-                            Please enter an product uid
+                            Please enter an unit name
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="Product" class="form-label">Unit system</label>
-                        <select name="system" class="form-select" id="">
+                        <select name="system" class="form-select" id="" required>
+                            <option selected disabled value="">Choose...</option>
                             {{#each system}}
                             <option value="{{_id}}">{{system_name}}</option>
                             {{/each}}
@@ -136,7 +137,8 @@
                     <div class="mb-3 text-right">
                         <label for="Product" class="form-label">Unit Context</label>
                         <div class="mb-3">
-                            <select name="context" class="form-select" id="">
+                            <select name="context" class="form-select" id="" required>
+                                <option selected disabled value="">Choose...</option>
                                 {{#each context}}
                                 <option value="{{_id}}">{{context_name}}</option>
                                 {{/each}}
@@ -149,7 +151,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </div>
                     </div>
@@ -167,7 +169,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/system/add" method="post" class="needs-validation">
+                <form action="/system/add" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="Product" class="form-label">Unit</label>
                         <input type="text" class="form-control" name="system_name" id="name" required>
@@ -181,7 +183,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </div>
                     </div>
@@ -201,7 +203,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/unit/addcontext" method="post" class="needs-validation">
+                <form action="/unit/addcontext" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="Product" class="form-label">Unit System Type</label>
                         <input type="text" class="form-control" name="context_name" id="name" required>
@@ -215,7 +217,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </div>
                     </div>
@@ -234,7 +236,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/pairs/add" method="post" class="needs-validation">
+                <form action="/pairs/add" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="Product" class="form-label">Pairs Name</label>
                         <input type="text" class="form-control" name="pairs_name" id="name" required>
@@ -247,6 +249,7 @@
                             <input type="number" name="val1" id="val1" class="form-control mb-2" step="any"
                                 placeholder="Value 1" required>
                             <select id="" name='pair1' class="form-select" required>
+                                <option selected disabled value="">Choose...</option>
                                 {{#each unit}}
                                 <option value="{{_id}}">{{unit_name}}</option>
                                 {{/each}}
@@ -256,6 +259,7 @@
                             <input type="number" name="val2" id="val2" class="form-control mb-2" step="any"
                                 placeholder="Value 2" required>
                             <select id="" name='pair2' class="form-select" required>
+                                <option selected disabled value="">Choose...</option>
                                 {{#each unit}}
                                 <option value="{{_id}}">{{unit_name}}</option>
                                 {{/each}}
@@ -264,6 +268,7 @@
                     </div>
                     <div class="mb-3">
                         <select name="type" id="type" class="form-select" aria-label="Select a type" required>
+                            <option selected disabled value="">Choose...</option>
                             <option value="1">Multiply</option>
                             <option value="2">Divide</option>
                         </select>
@@ -274,7 +279,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </div>
                     </div>
