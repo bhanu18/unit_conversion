@@ -77,7 +77,7 @@ export const deleteSystem = async (req, res) => {
 
     try {
 
-        await System.findOneAndRemove(req.params.id);
+        await System.findByIdAndRemove(req.params.id);
         req.flash('success_msg', 'Deleted succesfully');
         res.redirect('/')
 
