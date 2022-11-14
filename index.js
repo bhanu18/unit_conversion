@@ -3,9 +3,6 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import * as dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
-import session from "express-session";
-import MongoStore from 'connect-mongo';
-// import passportConfig from './config/passport.js';
 import passport from 'passport';
 import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
@@ -18,8 +15,6 @@ import unit from './routes/units.js';
 import system from './routes/system.js';
 import pairs from './routes/pairs.js';
 
-// (passportConfig)(passport);
-
 dotenv.config();
 
 const app = express();
@@ -28,14 +23,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 
 app.use(cookieParser('keyboardcat'));
-
-// Express Session
-app.use(session({
-  secret: 'keyboardcat',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_DB_CONNECTION_STRING }),
-}));
 
 // Method override
 app.use(
