@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import * as dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
-import passport from 'passport';
+import session from "express-session";
 import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import mongoose from 'mongoose';
@@ -24,6 +24,14 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 
 app.use(cookieParser('keyboardcat'));
 
+// Express Session
+app.use(session({
+  secret: 'keyboardcat',
+  resave: false,
+  saveUninitialized: false,
+  //store: MongoStore.create({ mongoUrl: process.env.MONGO_DB_CONNECTION_STRING }),
+}));
+
 // Method override
 app.use(
     methodOverride(function(req, res) {
@@ -35,10 +43,6 @@ app.use(
         }
     })
 )
-
-// passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // morgan
 app.use(logger('dev'));
