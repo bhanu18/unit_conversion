@@ -1,6 +1,6 @@
 # README #
 
-This is a unit conversion module with CRUD abilities for measurement units and system using nodeJS runing handlebars view engine.
+This is a unit conversion module with CRUD abilities to create and adjust unit systems. Built using nodeJS and expressJS framwork with handlebars running as view engine.
 
 ### What is this repository for? ###
 
